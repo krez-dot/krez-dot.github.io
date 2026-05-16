@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Dashboard</title>
+
+    <!-- Poppins font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Tabler icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+
+    <!-- Leaflet map CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css" />
+
+    <!-- Our stylesheet -->
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+
+    <div class="app" id="app">
+
+        <!-- Particle canvas -->
+        <canvas id="particleCanvas"></canvas>
+
+        <!-- Blobs -->
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+
+        <div class="container">
+
+            <!-- Weather alert banner -->
+            <div class="alert-banner" id="alertBanner">
+                <span class="alert-icon">⚠️</span>
+                <span class="alert-text" id="alertText"></span>
+                <button class="alert-close" id="alertClose">✕</button>
+            </div>
+
+            <!-- Top bar: title + language switcher -->
+            <div class="topbar">
+                <h1 class="app-title">🌤️ <span data-i18n="title">Weather Dashboard</span></h1>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="en">🇺🇸 EN</button>
+                    <button class="lang-btn" data-lang="fil">🇵🇭 FIL</button>
+                    <button class="lang-btn" data-lang="ja">🇯🇵 JA</button>
+                    <button class="lang-btn" data-lang="es">🇪🇸 ES</button>
+                    <button class="lang-btn" data-lang="fr">🇫🇷 FR</button>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="search-row">
+                <input type="text" id="cityInput" data-i18n-placeholder="searchPlaceholder"
+                    placeholder="Search a city..." />
+                <button id="searchBtn">
+                    <i class="ti ti-search"></i> <span data-i18n="search">Search</span>
+                </button>
+                <button id="locateBtn" title="Use my location">
+                    <i class="ti ti-current-location"></i>
+                </button>
+            </div>
+
+            <!-- Search history -->
+            <div class="history-row">
+                <span class="history-label" data-i18n="recent">Recent:</span>
+                <div class="history-chips" id="historyChips"></div>
+            </div>
+
+            <!-- Unit toggle -->
+            <div class="unit-toggle">
+                <span data-i18n="units">Units:</span>
+                <button class="unit-btn active" id="btnC">°C</button>
+                <button class="unit-btn" id="btnF">°F</button>
+            </div>
+
+            <!-- Error -->
+            <p class="error-msg" id="errorMsg"></p>
+
+            <!-- Loading -->
+            <p class="loading" id="loadingMsg">
+                <i class="ti ti-loader"></i> <span data-i18n="loading">Fetching weather...</span>
+            </p>
+
+            <!-- Share button -->
+            <div class="share-row" id="shareRow">
+                <button class="share-btn" id="shareBtn">
+                    <i class="ti ti-camera"></i> <span data-i18n="saveImage">Save as image</span>
+                </button>
+            </div>
+
+            <!-- Share target -->
+            <div id="shareTarget">
+
+                <!-- Main card -->
+                <div class="glass main-card" id="weatherMain">
+                    <div class="top-row">
+                        <div>
+                            <h2 id="cityName">—</h2>
+                            <p class="country" id="countryName">—</p>
+                            <div class="temp-row">
+                                <span class="temp-big" id="tempVal">—</span>
+                            </div>
+                            <p class="condition" id="conditionText">—</p>
+                            <p class="feels" id="feelsLike">—</p>
+                        </div>
+                        <div class="weather-icon" id="weatherIcon">🌤️</div>
+                    </div>
+
+                    <!-- Sunrise / Sunset -->
+                    <div class="sun-row">
+                        <div class="glass sun-card">
+                            <p class="sun-label">🌅 <span data-i18n="sunrise">Sunrise</span></p>
+                            <p class="sun-val" id="sunrise">—</p>
+                        </div>
+                        <div class="glass sun-card">
+                            <p class="sun-label">🌇 <span data-i18n="sunset">Sunset</span></p>
+                            <p class="sun-val" id="sunset">—</p>
+                        </div>
+                        <div class="glass sun-card">
+                            <p class="sun-label">🌙 <span data-i18n="daylight">Daylight</span></p>
+                            <p class="sun-val" id="daylight">—</p>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="glass stat-card">
+                            <p class="stat-label"><i class="ti ti-droplet"></i> <span
+                                    data-i18n="humidity">Humidity</span></p>
+                            <p class="stat-value" id="humidity">—</p>
+                        </div>
+                        <div class="glass stat-card">
+                            <p class="stat-label"><i class="ti ti-wind"></i> <span data-i18n="wind">Wind</span></p>
+                            <p class="stat-value" id="windSpeed">—</p>
+                        </div>
+                        <div class="glass stat-card">
+                            <p class="stat-label"><i class="ti ti-eye"></i> <span
+                                    data-i18n="visibility">Visibility</span></p>
+                            <p class="stat-value" id="visibility">—</p>
+                        </div>
+                        <div class="glass stat-card">
+                            <p class="stat-label"><i class="ti ti-umbrella"></i> <span data-i18n="rain">Rain</span></p>
+                            <p class="stat-value" id="rainChance">—</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hourly -->
+                <div class="glass section-card" id="hourlyWrap">
+                    <p class="section-title" data-i18n="hourly">Hourly forecast</p>
+                    <div class="hourly-scroll">
+                        <div class="hourly-bars" id="hourlyBars"></div>
+                    </div>
+                </div>
+
+                <!-- 7-day -->
+                <div class="glass section-card" id="forecastWrap">
+                    <p class="section-title" data-i18n="forecast">7-day forecast</p>
+                    <div class="forecast-grid" id="forecastGrid"></div>
+                </div>
+
+            </div>
+
+            <!-- Map -->
+            <div class="glass section-card map-card" id="mapWrap">
+                <p class="section-title">📍 <span data-i18n="map">Location map</span></p>
+                <div id="weatherMap"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Leaflet -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+
+    <!-- html2canvas -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+    <!-- Our script -->
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

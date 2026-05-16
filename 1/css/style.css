@@ -1,0 +1,655 @@
+/* ── Reset ── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── App wrapper ── */
+.app {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  padding: 2rem 1rem;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  transition: background 1.2s ease;
+}
+
+/* ── Background themes ── */
+.app.theme-sunny {
+  background: linear-gradient(135deg, #f46b45, #eea849, #f7971e);
+}
+
+.app.theme-cloudy {
+  background: linear-gradient(135deg, #4b6cb7, #182848, #2c3e6b);
+}
+
+.app.theme-rainy {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+.app.theme-stormy {
+  background: linear-gradient(135deg, #0f0c29, #1a1a2e, #16213e);
+}
+
+.app.theme-snowy {
+  background: linear-gradient(135deg, #83a4d4, #4a6fa5, #2c4875);
+}
+
+.app.theme-foggy {
+  background: linear-gradient(135deg, #3d4044, #606c76, #8e9eab);
+}
+
+/* ── Particle canvas ── */
+#particleCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Animated blobs ── */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.25;
+  pointer-events: none;
+  animation: drift 10s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+.blob-1 {
+  width: 350px;
+  height: 350px;
+  background: #7c3aed;
+  top: -100px;
+  left: -100px;
+  animation-delay: 0s;
+}
+
+.blob-2 {
+  width: 280px;
+  height: 280px;
+  background: #2563eb;
+  bottom: 60px;
+  right: -80px;
+  animation-delay: 3s;
+}
+
+.blob-3 {
+  width: 220px;
+  height: 220px;
+  background: #db2777;
+  top: 40%;
+  right: 10%;
+  animation-delay: 6s;
+}
+
+@keyframes drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    transform: translate(30px, 20px) scale(1.1);
+  }
+}
+
+/* ── Container ── */
+.container {
+  max-width: 660px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Title ── */
+.app-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #fff;
+}
+
+/* ── Glass base ── */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* ── Search ── */
+.search-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.search-row input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  padding: 11px 15px;
+  color: #fff;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  outline: none;
+  transition:
+    border 0.2s,
+    background 0.2s;
+}
+
+.search-row input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.search-row input:focus {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.search-row button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  color: #fff;
+  padding: 11px 18px;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.search-row button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ── History ── */
+.history-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  min-height: 28px;
+}
+
+.history-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.history-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-family: "Poppins", sans-serif;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chip:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Unit toggle ── */
+.unit-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 1rem;
+}
+
+.unit-btn {
+  padding: 4px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  background: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.unit-btn.active {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ── Error & loading ── */
+.error-msg {
+  color: #fca5a5;
+  font-size: 14px;
+  margin-bottom: 1rem;
+  display: none;
+}
+
+.loading {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  display: none;
+  margin-bottom: 1rem;
+}
+
+/* ── Share button ── */
+.share-row {
+  display: none;
+  margin-bottom: 0.75rem;
+}
+
+.share-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  color: #fff;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.share-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.share-btn:active {
+  transform: scale(0.97);
+}
+
+/* ── Main card ── */
+.main-card {
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  display: none;
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+h2 {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.country {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 0.5rem;
+}
+
+.temp-big {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.condition {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 6px;
+}
+
+.feels {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 3px;
+}
+
+.weather-icon {
+  font-size: 64px;
+  line-height: 1;
+  animation: floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* ── Sunrise / Sunset ── */
+.sun-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.sun-card {
+  flex: 1;
+  padding: 0.65rem 0.75rem;
+  text-align: center;
+}
+
+.sun-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 4px;
+}
+
+.sun-val {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ── Stats ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.stat-card {
+  padding: 0.7rem 0.75rem;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* ── Section cards ── */
+.section-card {
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  display: none;
+}
+
+.section-title {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 1rem;
+}
+
+/* ── Hourly chart ── */
+.hourly-scroll {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.hourly-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 100px;
+  min-width: 500px;
+}
+
+.h-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.h-temp {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+
+.h-bar {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  background: rgba(255, 255, 255, 0.35);
+  min-height: 4px;
+  transition: height 0.5s ease;
+}
+
+.h-time {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ── 7-day forecast ── */
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.fc-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 0.65rem 0.25rem;
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.fc-card:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.fc-day {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 4px;
+}
+
+.fc-icon {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.fc-hi {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.fc-lo {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ── Map ── */
+.map-card {
+  padding: 1.25rem;
+}
+
+#weatherMap {
+  height: 260px;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* ── Leaflet overrides ── */
+.leaflet-container {
+  border-radius: 12px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .forecast-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .temp-big {
+    font-size: 44px;
+  }
+
+  .weather-icon {
+    font-size: 48px;
+  }
+}
+
+/* ── Top bar ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.topbar .app-title {
+  margin-bottom: 0;
+}
+
+/* ── Language switcher ── */
+.lang-switcher {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.lang-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 4px 10px;
+  font-size: 12px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.lang-btn.active {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+
+/* ── Alert banner ── */
+.alert-banner {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: rgba(239, 68, 68, 0.25);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+.alert-banner.show {
+  display: flex;
+}
+
+.alert-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.alert-text {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.alert-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: background 0.2s;
+  font-family: 'Poppins', sans-serif;
+}
+
+.alert-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: rgba(239, 68, 68, 0.5); }
+  50%       { border-color: rgba(239, 68, 68, 0.9); }
+}
+
+/* ── Locate button ── */
+#locateBtn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  color: #fff;
+  padding: 11px 14px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#locateBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Responsive additions ── */
+@media (max-width: 480px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lang-switcher {
+    gap: 4px;
+  }
+
+  .lang-btn {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+}
