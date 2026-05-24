@@ -742,5 +742,5 @@ async function fetchWeather() {
 // ── Init ──
 renderHistory();
 applyTranslations();
-cityInput.value = 'Baguio';
+cityInput.value = 'Tarlac City';
 fetchWeather();

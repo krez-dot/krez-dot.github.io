@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kape ni Lola – Baguio City Café</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --cream: #F5ECD7;
+      --warm-white: #FBF7F0;
+      --brown-dark: #3B2314;
+      --brown-mid: #6B3F23;
+      --brown-light: #A0622A;
+      --tan: #C8965A;
+      --sage: #7A8C6E;
+      --terracotta: #B85C38;
+      --text-main: #2C1A0E;
+      --text-muted: #7A5C42;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--warm-white);
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(59, 35, 20, 0.96);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      color: var(--tan);
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+
+    .nav-logo span {
+      color: var(--cream);
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: .8;
+      transition: opacity .2s;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      opacity: 1;
+      color: var(--tan);
+    }
+
+    /* PAGES */
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding-top: 64px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* ===== HOME PAGE ===== */
+    .hero {
+      position: relative;
+      height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--brown-dark);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 60%, rgba(168, 98, 42, .35) 0%, transparent 60%), radial-gradient(ellipse at 70% 30%, rgba(184, 92, 56, .2) 0%, transparent 50%);
+      z-index: 1;
+    }
+
+    .hero-texture {
+      position: absolute;
+      inset: 0;
+      opacity: .06;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c8965a' fill-opacity='1'%3E%3Ccircle cx='5' cy='5' r='1.5'/%3E%3Ccircle cx='25' cy='5' r='1'/%3E%3Ccircle cx='45' cy='5' r='1.5'/%3E%3Ccircle cx='15' cy='20' r='1'/%3E%3Ccircle cx='35' cy='20' r='1.5'/%3E%3Ccircle cx='55' cy='20' r='1'/%3E%3Ccircle cx='5' cy='35' r='1'/%3E%3Ccircle cx='25' cy='35' r='1.5'/%3E%3Ccircle cx='45' cy='35' r='1'/%3E%3C/g%3E%3C/svg%3E");
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 700px;
+      padding: 0 24px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--tan);
+      margin-bottom: 20px;
+      opacity: .9;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(52px, 7vw, 88px);
+      color: var(--cream);
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+
+    .hero-title em {
+      color: var(--tan);
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      color: rgba(245, 236, 215, .65);
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      letter-spacing: .3px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--tan);
+      color: var(--brown-dark);
+      padding: 14px 36px;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+
+    .btn-primary:hover {
+      background: var(--cream);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      display: inline-block;
+      border: 1.5px solid rgba(245, 236, 215, .4);
+      color: var(--cream);
+      padding: 13px 32px;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 400;
+      cursor: pointer;
+      transition: border-color .2s;
+      margin-left: 16px;
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--tan);
+      color: var(--tan);
+    }
+
+    /* STATS STRIP */
+    .stats-strip {
+      background: var(--tan);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .stat-item {
+      padding: 28px 56px;
+      text-align: center;
+      border-right: 1px solid rgba(59, 35, 20, .2);
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      color: var(--brown-dark);
+      font-weight: 700;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--brown-mid);
+      margin-top: 4px;
+    }
+
+    /* MENU PREVIEW */
+    .section {
+      padding: 96px 64px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--tan);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      color: var(--brown-dark);
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 16px;
+      font-weight: 300;
+      max-width: 520px;
+      line-height: 1.8;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 56px;
+    }
+
+    .menu-card {
+      background: var(--cream);
+      padding: 36px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .menu-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--tan);
+    }
+
+    .menu-card:nth-child(2)::before {
+      background: var(--terracotta);
+    }
+
+    .menu-card:nth-child(3)::before {
+      background: var(--sage);
+    }
+
+    .menu-icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+
+    .menu-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--brown-dark);
+      margin-bottom: 8px;
+    }
+
+    .menu-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .menu-items {
+      list-style: none;
+    }
+
+    .menu-items li {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed rgba(107, 63, 35, .15);
+      font-size: 14px;
+      color: var(--text-main);
+    }
+
+    .menu-items li:last-child {
+      border-bottom: none;
+    }
+
+    .menu-items .price {
+      color: var(--tan);
+      font-weight: 700;
+    }
+
+    /* TESTIMONIAL */
+    .testimonial-section {
+      background: var(--brown-dark);
+      padding: 96px 64px;
+      text-align: center;
+    }
+
+    .quote-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 100px;
+      color: var(--tan);
+      opacity: .3;
+      line-height: .5;
+      margin-bottom: 24px;
+    }
+
+    .testimonial-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(20px, 3vw, 28px);
+      color: var(--cream);
+      font-style: italic;
+      max-width: 680px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    .testimonial-author {
+      color: var(--tan);
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* HOURS */
+    .hours-section {
+      background: var(--cream);
+      padding: 80px 64px;
+      display: flex;
+      gap: 80px;
+      align-items: flex-start;
+    }
+
+    .hours-text {
+      flex: 1;
+    }
+
+    .hours-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .hour-item {
+      background: var(--warm-white);
+      padding: 24px;
+      border-left: 3px solid var(--tan);
+    }
+
+    .hour-day {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .hour-time {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--brown-dark);
+    }
+
+    /* ===== ABOUT PAGE ===== */
+    .about-hero {
+      background: var(--brown-mid);
+      padding: 96px 64px;
+      display: flex;
+      gap: 80px;
+      align-items: center;
+      min-height: 500px;
+    }
+
+    .about-hero-text {
+      flex: 1;
+    }
+
+    .about-hero-img {
+      flex: 1;
+      position: relative;
+    }
+
+    .img-placeholder {
+      background: var(--brown-light);
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .img-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(245, 236, 215, .1) 0%, transparent 70%);
+    }
+
+    .coffee-illustration {
+      font-size: 80px;
+      opacity: .6;
+    }
+
+    .img-badge {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      background: var(--tan);
+      color: var(--brown-dark);
+      padding: 16px 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    .about-body {
+      padding: 80px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+
+    .value-card {
+      padding: 32px;
+      border-left: 3px solid var(--tan);
+      background: var(--cream);
+    }
+
+    .value-card:nth-child(2) {
+      border-color: var(--terracotta);
+    }
+
+    .value-card:nth-child(3) {
+      border-color: var(--sage);
+    }
+
+    .value-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--brown-dark);
+      margin-bottom: 12px;
+    }
+
+    .value-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .team-section {
+      padding: 0 64px 96px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .team-card {
+      text-align: center;
+    }
+
+    .team-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      border: 3px solid var(--tan);
+    }
+
+    .team-avatar.t1 {
+      background: #E8D5B7;
+    }
+
+    .team-avatar.t2 {
+      background: #D4C2A8;
+    }
+
+    .team-avatar.t3 {
+      background: #C8B89A;
+    }
+
+    .team-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--brown-dark);
+      margin-bottom: 4px;
+    }
+
+    .team-role {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--tan);
+      margin-bottom: 12px;
+    }
+
+    .team-bio {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ===== CONTACT PAGE ===== */
+    .contact-hero {
+      background: var(--brown-dark);
+      padding: 80px 64px;
+      text-align: center;
+    }
+
+    .contact-body {
+      padding: 80px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
+    }
+
+    .contact-info-item {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 36px;
+      align-items: flex-start;
+    }
+
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .contact-info-item h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      color: var(--brown-dark);
+      margin-bottom: 4px;
+    }
+
+    .contact-info-item p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .contact-form {
+      background: var(--cream);
+      padding: 40px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--brown-mid);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: var(--warm-white);
+      border: 1px solid rgba(107, 63, 35, .2);
+      padding: 12px 16px;
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--tan);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .map-placeholder {
+      background: var(--brown-dark);
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-content {
+      text-align: center;
+      z-index: 1;
+    }
+
+    .map-pin {
+      font-size: 48px;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .map-content p {
+      color: var(--cream);
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+    }
+
+    .map-content small {
+      color: var(--tan);
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--brown-dark);
+      padding: 48px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(200, 150, 90, .2);
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      color: var(--tan);
+      font-size: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      color: rgba(245, 236, 215, .5);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: color .2s;
+      cursor: pointer;
+    }
+
+    .footer-links a:hover {
+      color: var(--tan);
+    }
+
+    .footer-copy {
+      color: rgba(245, 236, 215, .3);
+      font-size: 12px;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .page.active .hero-content {
+      animation: fadeUp .7s ease both;
+    }
+
+    .page.active .menu-card {
+      animation: fadeUp .5s ease both;
+    }
+
+    .page.active .menu-card:nth-child(2) {
+      animation-delay: .1s;
+    }
+
+    .page.active .menu-card:nth-child(3) {
+      animation-delay: .2s;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-logo">Kape <span>ni</span> Lola</div>
+    <ul class="nav-links">
+      <li><a class="active" onclick="showPage('home',this)">Home</a></li>
+      <li><a onclick="showPage('about',this)">About</a></li>
+      <li><a onclick="showPage('contact',this)">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== HOME ===== -->
+  <div id="home" class="page active">
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-texture"></div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">Est. 2009 · Baguio City</p>
+        <h1 class="hero-title">Every cup tells<br>a <em>story.</em></h1>
+        <p class="hero-subtitle">A family café tucked in the highlands — where slow-roasted beans, warm bread, and good
+          conversation have been home since 2009.</p>
+        <button class="btn-primary" onclick="showPage('contact', document.querySelectorAll('.nav-links a')[2])">Reserve
+          a Table</button>
+        <button class="btn-outline" onclick="showPage('about', document.querySelectorAll('.nav-links a')[1])">Our
+          Story</button>
+      </div>
+    </section>
+
+    <div class="stats-strip">
+      <div class="stat-item">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Years open</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">34</div>
+        <div class="stat-label">Blends & brews</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">Guest rating</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Local beans</div>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="section-label">What we brew</div>
+      <h2 class="section-title">Today's Favorites</h2>
+      <p class="section-sub">Sourced from Benguet highlands, roasted in-house every morning, served with love.</p>
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="menu-icon">☕</div>
+          <h3>Espresso & Brews</h3>
+          <p>Bold, bright, and carefully extracted from single-origin Benguet arabica.</p>
+          <ul class="menu-items">
+            <li><span>Benguet Espresso</span><span class="price">₱120</span></li>
+            <li><span>Lola's Cortado</span><span class="price">₱150</span></li>
+            <li><span>Highland Flat White</span><span class="price">₱165</span></li>
+            <li><span>Cold Brew Pitcher</span><span class="price">₱220</span></li>
+          </ul>
+        </div>
+        <div class="menu-card">
+          <div class="menu-icon">🍞</div>
+          <h3>Fresh Bakery</h3>
+          <p>Baked before sunrise so you always get it warm — classic recipes with a highland twist.</p>
+          <ul class="menu-items">
+            <li><span>Pan de Coco Loaf</span><span class="price">₱95</span></li>
+            <li><span>Ube Ensaymada</span><span class="price">₱75</span></li>
+            <li><span>Buttered Pandesal</span><span class="price">₱45</span></li>
+            <li><span>Strawberry Croissant</span><span class="price">₱110</span></li>
+          </ul>
+        </div>
+        <div class="menu-card">
+          <div class="menu-icon">🍵</div>
+          <h3>Warm Plates</h3>
+          <p>Simple, nourishing comfort food that pairs perfectly with your morning brew.</p>
+          <ul class="menu-items">
+            <li><span>Lola's Tapsilog</span><span class="price">₱195</span></li>
+            <li><span>Garlic Longsilog</span><span class="price">₱175</span></li>
+            <li><span>Mushroom Toast</span><span class="price">₱145</span></li>
+            <li><span>Champorado Set</span><span class="price">₱130</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="testimonial-section">
+      <div class="quote-mark">"</div>
+      <p class="testimonial-text">The kind of café that feels like a grandmother's kitchen — warm, unhurried, and
+        tasting of something you've been missing for a long time.</p>
+      <div class="testimonial-author">— Maria Santos, Lifestyle Magazine PH</div>
+    </div>
+
+    <div class="hours-section">
+      <div class="hours-text">
+        <div class="section-label">Come visit us</div>
+        <h2 class="section-title">We're Open<br>All Week</h2>
+        <p class="section-sub" style="margin-bottom:32px;">Find us along Session Road Extension, just past the old
+          market. Free seating, no rush.</p>
+        <button class="btn-primary" onclick="showPage('contact', document.querySelectorAll('.nav-links a')[2])">Get
+          Directions</button>
+      </div>
+      <div class="hours-grid">
+        <div class="hour-item">
+          <div class="hour-day">Mon – Fri</div>
+          <div class="hour-time">7:00 AM – 8:00 PM</div>
+        </div>
+        <div class="hour-item" style="border-color:var(--terracotta)">
+          <div class="hour-day">Saturday</div>
+          <div class="hour-time">6:30 AM – 9:00 PM</div>
+        </div>
+        <div class="hour-item" style="border-color:var(--sage)">
+          <div class="hour-day">Sunday</div>
+          <div class="hour-time">7:30 AM – 7:00 PM</div>
+        </div>
+        <div class="hour-item" style="border-color:var(--brown-light)">
+          <div class="hour-day">Holidays</div>
+          <div class="hour-time">8:00 AM – 6:00 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-logo">Kape ni Lola</div>
+      <div class="footer-links">
+        <a onclick="showPage('home',document.querySelectorAll('.nav-links a')[0])">Home</a>
+        <a onclick="showPage('about',document.querySelectorAll('.nav-links a')[1])">About</a>
+        <a onclick="showPage('contact',document.querySelectorAll('.nav-links a')[2])">Contact</a>
+      </div>
+      <div class="footer-copy">© 2025 Kape ni Lola. Baguio City.</div>
+    </footer>
+  </div>
+
+  <!-- ===== ABOUT ===== -->
+  <div id="about" class="page">
+    <section class="about-hero">
+      <div class="about-hero-text">
+        <p class="section-label" style="color:var(--tan)">Our story</p>
+        <h1
+          style="font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);color:var(--cream);line-height:1.1;margin-bottom:20px;">
+          Brewed with<br><em style="color:var(--tan)">memory &amp;<br>meaning.</em></h1>
+        <p style="color:rgba(245,236,215,.7);font-size:16px;font-weight:300;line-height:1.9;max-width:480px;">What
+          started as a tiny stall at the Baguio Public Market has grown into a beloved café — but we've never forgotten
+          where we came from, or who taught us how to make the perfect cup.</p>
+      </div>
+      <div class="about-hero-img">
+        <div class="img-placeholder">
+          <div class="coffee-illustration">🫘</div>
+        </div>
+        <div class="img-badge">Est. 2009<br><span
+            style="font-size:11px;letter-spacing:2px;font-family:'Lato',sans-serif;">BAGUIO CITY</span></div>
+      </div>
+    </section>
+
+    <section class="about-body">
+      <div>
+        <div class="section-label">The beginning</div>
+        <h2 class="section-title" style="font-size:36px;">From Lola's<br>Kitchen</h2>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.9;margin-top:16px;">In 2009, Lola Remedios Cruz
+          began selling brewed coffee and fresh pandesal from her home in Burnham Park. Word spread — not through ads,
+          but through neighbors telling neighbors about the cup that tasted like Sunday mornings.<br><br>By 2012, we
+          opened our first proper café along Session Road Extension. Lola Remy still visits every Saturday to check on
+          the beans.</p>
+      </div>
+      <div>
+        <div class="section-label">Our craft</div>
+        <h2 class="section-title" style="font-size:36px;">The Benguet<br>Difference</h2>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.9;margin-top:16px;">We source exclusively from
+          smallhold farms in the Cordillera mountains — communities we've known for over a decade. The cool highland
+          climate and mineral-rich soil produce an arabica with natural brightness and a clean, sweet finish.<br><br>We
+          roast in small batches three times a week to ensure every cup is as fresh as possible.</p>
+      </div>
+    </section>
+
+    <section style="padding:0 64px 80px;">
+      <div class="section-label">What we believe</div>
+      <h2 class="section-title">Our Values</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;">
+        <div class="value-card">
+          <div style="font-size:28px;margin-bottom:12px;">🌿</div>
+          <h3>Locally Rooted</h3>
+          <p>Every bean, every egg, every loaf comes from within the Cordillera region. We support the farmers who feed
+            our community.</p>
+        </div>
+        <div class="value-card">
+          <div style="font-size:28px;margin-bottom:12px;">🤝</div>
+          <h3>People First</h3>
+          <p>No rush, no minimums. Pull out a book, catch up with a friend, or just sit with the fog. This place is
+            yours.</p>
+        </div>
+        <div class="value-card">
+          <div style="font-size:28px;margin-bottom:12px;">☕</div>
+          <h3>Honest Craft</h3>
+          <p>No shortcuts in the kitchen or the roastery. Good coffee takes time, and we think that's worth it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="team-section">
+      <div class="section-label">The people</div>
+      <h2 class="section-title">Meet the Team</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar t1">👵</div>
+          <div class="team-name">Remedios Cruz</div>
+          <div class="team-role">Founder & Matriarch</div>
+          <p class="team-bio">Lola Remy started it all with a charcoal stove and her mother's recipe. Now 74, she still
+            taste-tests every new blend before it hits the menu.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar t2">👨‍🍳</div>
+          <div class="team-name">Marco Cruz</div>
+          <div class="team-role">Head Roaster & Chef</div>
+          <p class="team-bio">Lola Remy's grandson, trained in Manila but always came back to Baguio. He manages
+            sourcing relationships with six Benguet farming families.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar t3">👩‍💼</div>
+          <div class="team-name">Ana Reyes</div>
+          <div class="team-role">Café Manager</div>
+          <p class="team-bio">Ana joined in 2016 as a part-time barista while studying at UP Baguio. Today she runs
+            daily operations and trains every new team member personally.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-logo">Kape ni Lola</div>
+      <div class="footer-links">
+        <a onclick="showPage('home',document.querySelectorAll('.nav-links a')[0])">Home</a>
+        <a onclick="showPage('about',document.querySelectorAll('.nav-links a')[1])">About</a>
+        <a onclick="showPage('contact',document.querySelectorAll('.nav-links a')[2])">Contact</a>
+      </div>
+      <div class="footer-copy">© 2025 Kape ni Lola. Baguio City.</div>
+    </footer>
+  </div>
+
+  <!-- ===== CONTACT ===== -->
+  <div id="contact" class="page">
+    <section class="contact-hero">
+      <p class="section-label" style="color:var(--tan)">Reach out</p>
+      <h1
+        style="font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);color:var(--cream);margin-bottom:16px;">
+        Let's have a<br><em style="color:var(--tan)">conversation.</em></h1>
+      <p
+        style="color:rgba(245,236,215,.6);font-size:16px;font-weight:300;max-width:480px;margin:0 auto;line-height:1.8;">
+        Whether it's a reservation, a catering inquiry, or just a hello — we'd love to hear from you.</p>
+    </section>
+
+    <section class="contact-body">
+      <div>
+        <div class="section-label">Find us</div>
+        <h2 class="section-title" style="font-size:36px;margin-bottom:40px;">Visit the Café</h2>
+        <div class="contact-info-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Address</h4>
+            <p>12 Session Road Extension<br>Baguio City, Benguet 2600<br>(Near the old Burnham Market)</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Phone</h4>
+            <p>(074) 443-2281<br>+63 917 555 0184</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <h4>Email</h4>
+            <p>hello@kapenilola.ph<br>catering@kapenilola.ph</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <h4>Hours</h4>
+            <p>Mon–Fri: 7:00 AM – 8:00 PM<br>Sat: 6:30 AM – 9:00 PM<br>Sun & Holidays: 7:30 AM – 7:00 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="contact-form">
+          <div class="section-label" style="margin-bottom:24px;">Send a message</div>
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Maria"></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Santos"></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="maria@email.com"></div>
+          <div class="form-group"><label>Subject</label>
+            <select>
+              <option>Table Reservation</option>
+              <option>Catering Inquiry</option>
+              <option>Private Event</option>
+              <option>General Question</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Date (if reservation)</label><input type="date"></div>
+          <div class="form-group"><label>Message</label><textarea
+              placeholder="We'd love to hear from you..."></textarea></div>
+          <button class="btn-primary" style="width:100%;"
+            onclick="this.textContent='Message sent! ☕';this.style.background='var(--sage)';setTimeout(()=>{this.textContent='Send Message';this.style.background='';},3000)">Send
+            Message</button>
+        </div>
+      </div>
+    </section>
+
+    <div style="padding:0 64px 96px;">
+      <div class="map-placeholder">
+        <div class="map-content">
+          <span class="map-pin">📍</span>
+          <p>12 Session Road Extension, Baguio City</p>
+          <small>Baguio City · Benguet · Cordillera</small>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-logo">Kape ni Lola</div>
+      <div class="footer-links">
+        <a onclick="showPage('home',document.querySelectorAll('.nav-links a')[0])">Home</a>
+        <a onclick="showPage('about',document.querySelectorAll('.nav-links a')[1])">About</a>
+        <a onclick="showPage('contact',document.querySelectorAll('.nav-links a')[2])">Contact</a>
+      </div>
+      <div class="footer-copy">© 2025 Kape ni Lola. Baguio City.</div>
+    </footer>
+  </div>
+
+  <script>
+    function showPage(id, linkEl) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      if (linkEl) linkEl.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return false;
+    }
+  </script>
+</body>
+
+</html>

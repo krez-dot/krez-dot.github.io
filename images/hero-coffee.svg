@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#C8965A" />
+      <stop offset="1" stop-color="#B85C38" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="#3B2314" />
+  <g transform="translate(120,80) scale(1.2)">
+    <ellipse cx="420" cy="260" rx="240" ry="80" fill="#2C1A0E" opacity="0.25" />
+    <g fill="url(#g)">
+      <path d="M300 200c0-66 54-120 120-120s120 54 120 120H300z" />
+      <rect x="280" y="200" width="260" height="140" rx="18" />
+    </g>
+    <text x="360" y="360" fill="#F5ECD7" font-family="Lato, sans-serif" font-size="28">Kape ni Lola</text>
+  </g>
+</svg>
